@@ -1,3 +1,5 @@
+package model;
+
 public class Subtask extends Task {
     private final int epicID; // Для того чтобы знать к какому эпику относится сабтаск
 
@@ -6,7 +8,7 @@ public class Subtask extends Task {
         this.epicID = epicID;
     }
 
-    public int getEpicID() {
+    public int getEpicId() {
         return epicID;
     }
 }

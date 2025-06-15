@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 
 public class Epic extends Task {
@@ -19,8 +21,8 @@ public class Epic extends Task {
         System.out.println("Нельзя вручную менять статус эпика.");
     }
 
-    // Замена статуса происходит автоматически в TaskManager
-    void forceSetStatus(Status status) {
+    // Замена статуса происходит автоматически в service.TaskManager
+    public void forceSetStatus(Status status) {
         this.status = status;
     }
 }
