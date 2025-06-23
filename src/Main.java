@@ -2,11 +2,11 @@ import model.Epic;
 import model.Status;
 import model.Subtask;
 import model.Task;
-import service.TaskManager;
+import service.InMemoryTaskManager;
 
 public class Main {
     public static void main(String[] args) {
-        TaskManager manager = new TaskManager();
+        InMemoryTaskManager manager = new InMemoryTaskManager();
 
         // Простые задачи
         Task t1 = new Task("Купить продукты", "Сходить в магазин", manager.generateId(), Status.NEW);
