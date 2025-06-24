@@ -9,25 +9,25 @@ public class Main {
         InMemoryTaskManager manager = new InMemoryTaskManager();
 
         // Простые задачи
-        Task t1 = new Task("Купить продукты", "Сходить в магазин", manager.generateId(), Status.NEW);
-        Task t2 = new Task("Помыть машину", "Вымыть снаружи и внутри", manager.generateId(), Status.IN_PROGRESS);
+        Task t1 = new Task("Купить продукты", "Сходить в магазин", Status.NEW);
+        Task t2 = new Task("Помыть машину", "Вымыть снаружи и внутри", Status.IN_PROGRESS);
         manager.addTask(t1);
         manager.addTask(t2);
 
         // Эпик 1 с двумя подзадачами
-        Epic e1 = new Epic("Организация свадьбы", "Праздник на 100 человек", manager.generateId());
+        Epic e1 = new Epic("Организация свадьбы", "Праздник на 100 человек");
         manager.addEpic(e1);
 
-        Subtask s1 = new Subtask("Найти зал", "Найти банкетный зал", manager.generateId(), Status.DONE, e1.getId());
-        Subtask s2 = new Subtask("Нанять фотографа", "Найти и договориться", manager.generateId(), Status.DONE, e1.getId());
+        Subtask s1 = new Subtask("Найти зал", "Найти банкетный зал", Status.DONE, e1.getId());
+        Subtask s2 = new Subtask("Нанять фотографа", "Найти и договориться", Status.DONE, e1.getId());
         manager.addSubtask(s1);
         manager.addSubtask(s2);
 
         // Эпик 2 с одной подзадачей
-        Epic e2 = new Epic("Переезд", "Переезд в новую квартиру", manager.generateId());
+        Epic e2 = new Epic("Переезд", "Переезд в новую квартиру");
         manager.addEpic(e2);
 
-        Subtask s3 = new Subtask("Упаковать вещи", "Сложить всё в коробки", manager.generateId(), Status.NEW, e2.getId());
+        Subtask s3 = new Subtask("Упаковать вещи", "Сложить всё в коробки", Status.NEW, e2.getId());
         manager.addSubtask(s3);
 
         System.out.println("Все задачи: " + manager.getAllTasks());

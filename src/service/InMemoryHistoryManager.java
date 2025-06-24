@@ -5,13 +5,16 @@ import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private final ArrayList<Task> history = new ArrayList<>();
+    private static final int MAX_HISTORY_SIZE = 10;
 
     @Override
     public void add(Task task) {
-        history.remove(task); // если уже есть — удаляем
-        history.add(task);    // и кладём в конец
-        if (history.size() > 10) {
-            history.remove(0);
+        if (task == null) return;
+
+        history.add(task); // просто добавляем, даже если задача уже есть
+
+        if (history.size() > MAX_HISTORY_SIZE) {
+            history.removeFirst(); // удаляем самую старую если список заполнен
         }
     }
 

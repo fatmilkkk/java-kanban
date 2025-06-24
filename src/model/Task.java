@@ -5,14 +5,18 @@ import java.util.Objects;
 public class Task {
     protected String name;
     protected String description;
-    protected final int id;
+    protected int id;
     protected Status status;
 
-    public Task(String name, String description, int id, Status status) {
+    public Task(String name, String description, Status status) {
         this.name = name;
         this.description = description;
-        this.id = id;
         this.status = status;
+    }
+
+    // Добавил сеттер для ID
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId() {
