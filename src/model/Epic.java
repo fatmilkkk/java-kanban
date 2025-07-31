@@ -15,6 +15,18 @@ public class Epic extends Task {
         return new ArrayList<>(subtaskIds);
     }
 
+    public void removeSubtaskId(int id) {
+        subtaskIds.remove((Integer) id);
+    }
+
+    public void addSubtaskId(int id) {
+        subtaskIds.add((Integer) id);
+    }
+
+    public void clearSubtaskId() {
+        subtaskIds.clear();
+    }
+
     // Ручная установка статуса у эпика запрещена
     @Override
     public void setStatus(Status status) {
