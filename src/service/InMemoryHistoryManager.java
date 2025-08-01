@@ -21,10 +21,10 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private void linkLast(Task task) {
         Node<Task> newNode = new Node<>(tail, task, null);
-        if (tail != null) {
-            tail.next = newNode;
-        } else {
+        if (tail == null) {
             head = newNode;
+        } else {
+            tail.next = newNode;
         }
         tail = newNode;
         nodeMap.put(task.getId(), newNode);

@@ -108,13 +108,26 @@ public class InMemoryTaskManager implements TaskManager {
     // Сабтаски
     @Override
     public void addSubtask(Subtask subtask) {
-        Epic epic = epics.get(subtask.getEpicId());
-        if (epic == null) {
-            System.out.println("Ошибка: эпик с ID " + subtask.getEpicId() + " не найден. Подзадача не добавлена.");
+        if (subtask == null) {
+            System.out.println("Ошибка: подзадача не может быть null");
             return;
         }
 
-        subtask.setId(generateId());
+        // Проверка на ссылку на самого себя
+        if (subtask.getId() != 0 && subtask.getId() == subtask.getEpicId()) {
+            System.out.println("Ошибка: сабтаск не может ссылаться на самого себя");
+            return;
+        }
+
+        Epic epic = epics.get(subtask.getEpicId());
+        if (epic == null) {
+            System.out.println("Ошибка: эпик с ID " + subtask.getEpicId() + " не найден");
+            return;
+        }
+
+        if (subtask.getId() == 0) {
+            subtask.setId(generateId());
+        }
         subtasks.put(subtask.getId(), subtask);
         epic.addSubtaskId(subtask.getId());
         updateEpicStatus(epic);
