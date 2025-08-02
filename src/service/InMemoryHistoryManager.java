@@ -4,22 +4,67 @@ import model.Task;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private final ArrayList<Task> history = new ArrayList<>();
-    private static final int MAX_HISTORY_SIZE = 10;
+    private final Map<Integer, Node<Task>> nodeMap = new HashMap<>();
+    private Node<Task> head;
+    private Node<Task> tail;
 
     @Override
     public void add(Task task) {
         if (task == null) return;
 
-        history.add(task); // просто добавляем, даже если задача уже есть
+        // Удалить старое вхождение, если есть
+        remove(task.getId());
 
-        if (history.size() > MAX_HISTORY_SIZE) {
-            history.removeFirst(); // удаляем самую старую если список заполнен
+        Node<Task> newNode = linkLast(task);
+
+        tail = newNode;
+        nodeMap.put(task.getId(), newNode);
+    }
+
+    private Node<Task> linkLast(Task task) {
+        Node<Task> newNode = new Node<>(tail, task, null);
+        if (tail == null) {
+            head = newNode;
+        } else {
+            tail.next = newNode;
+        }
+        return newNode;
+    }
+
+    @Override
+    public void remove(int id) {
+        Node<Task> node = nodeMap.remove(id);
+        if (node != null) {
+            removeNode(node);
+        }
+    }
+
+
+    private void removeNode(Node<Task> node) {
+        Node<Task> prev = node.prev;
+        Node<Task> next = node.next;
+
+        if (prev != null) {
+            prev.next = next;
+        } else {
+            head = next;
+        }
+
+        if (next != null) {
+            next.prev = prev;
+        } else {
+            tail = prev;
         }
     }
 
     @Override
-    public ArrayList<Task> getHistory() {
-        return new ArrayList<>(history);
+    public List<Task> getHistory() {
+        List<Task> history = new ArrayList<>();
+        Node<Task> current = head;
+        while (current != null) {
+            history.add(current.data);
+            current = current.next;
+        }
+        return history;
     }
 }
