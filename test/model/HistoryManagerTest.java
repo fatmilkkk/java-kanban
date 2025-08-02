@@ -1,6 +1,5 @@
 package model;
 
-import model.*;
 import org.junit.jupiter.api.Test;
 import service.*;
 
@@ -13,15 +12,14 @@ public class HistoryManagerTest {
 
     @Test
     void shouldAddTasksToHistory() {
-        Task task = new Task("Task", "Desc", Status.NEW);
-        task.setId(1); // Явно задаём ID
+        Task task = MockData.createTask("Task", "Desc", Status.NEW);
         history.add(task);
         assertEquals(List.of(task), history.getHistory());
     }
 
     @Test
     void shouldNotDuplicateTasks() {
-        Task task = new Task("Dupe", "Test", Status.NEW);
+        Task task = MockData.createTask("Dupe", "Test", Status.NEW);
         history.add(task);
         history.add(task); // Повторное добавление
         assertEquals(1, history.getHistory().size(), "История не должна дублировать задачи");
@@ -29,31 +27,26 @@ public class HistoryManagerTest {
 
     @Test
     void shouldRemoveTaskFromHistory() {
-        Task task1 = new Task("First", "1", Status.NEW);
-        task1.setId(1);
-        Task task2 = new Task("Second", "2", Status.NEW);
-        task2.setId(2);
+        Task task1 = MockData.createTask("First", "1", Status.NEW);
+        Task task2 = MockData.createTask("Second", "2", Status.NEW);
 
         history.add(task1);
         history.add(task2);
-        history.remove(1); // Удаляем task1
+        history.remove(task1.getId()); // Удаляем task1
 
         assertEquals(List.of(task2), history.getHistory());
     }
 
     @Test
     void shouldKeepOrderAfterRemoval() {
-        Task task1 = new Task("First", "1", Status.NEW);
-        task1.setId(1);
-        Task task2 = new Task("Second", "2", Status.NEW);
-        task2.setId(2);
-        Task task3 = new Task("Third", "3", Status.NEW);
-        task3.setId(3);
+        Task task1 = MockData.createTask("First", "1", Status.NEW);
+        Task task2 = MockData.createTask("Second", "2", Status.NEW);
+        Task task3 = MockData.createTask("Third", "3", Status.NEW);
 
         history.add(task1);
         history.add(task2);
         history.add(task3);
-        history.remove(2); // Удаляем task2
+        history.remove(task2.getId()); // Удаляем task2
 
         assertEquals(List.of(task1, task3), history.getHistory());
     }

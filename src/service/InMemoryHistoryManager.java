@@ -15,19 +15,20 @@ public class InMemoryHistoryManager implements HistoryManager {
         // Удалить старое вхождение, если есть
         remove(task.getId());
 
-        // Добавить новое в конец
-        linkLast(task);
+        Node<Task> newNode = linkLast(task);
+
+        tail = newNode;
+        nodeMap.put(task.getId(), newNode);
     }
 
-    private void linkLast(Task task) {
+    private Node<Task> linkLast(Task task) {
         Node<Task> newNode = new Node<>(tail, task, null);
         if (tail == null) {
             head = newNode;
         } else {
             tail.next = newNode;
         }
-        tail = newNode;
-        nodeMap.put(task.getId(), newNode);
+        return newNode;
     }
 
     @Override
